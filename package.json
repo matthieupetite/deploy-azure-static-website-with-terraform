@@ -1,0 +1,168 @@
+{
+  "name": "angular.io-example",
+  "version": "1.0.2",
+  "description": "Example project from an angular.io guide.",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "e2e": "ng e2e",
+    "prepare": "is-ci || husky install",
+    "commit": "cz",
+    "precommit:check": "./scripts/run-precommit-check.sh",
+    "clean": "rm -rf infra/.terraform* infra/terraform.tfstate* && rm infra/plan.out && rm -rf infra/dist",
+    "packages:check": "ncu",
+    "packages:fix": "ncu -u",
+    "prettier:check": "prettier --check './**/*.js'",
+    "prettier:fix": "prettier --write './**/*.js'",
+    "eslint:check": "eslint './**/*.js'",
+    "eslint:fix": "eslint --fix './**/*.js'",
+    "markdown:check": "markdownlint **/*.md --ignore node_modules",
+    "markdown:fix": "markdownlint **/*.md --fix --ignore node_modules",
+    "terraform:validate": "cd infra && terraform init -upgrade -backend=false && terraform validate",
+    "terraform:fmt:fix": "cd  infra && terraform fmt -recursive",
+    "terraform:fmt:check": "cd  infra && terraform fmt -recursive -check",
+    "terraform:docs": "sh ./scripts/create-terraform-docs.sh",
+    "terraform:generate-tfvars": "terraform-docs tfvars hcl infra > infra/terraform.tfvars",
+    "terraform:tfsec:static": "cd infra && tfsec .",
+    "terraform:init": "cd infra && terraform init -reconfigure -upgrade -backend-config=./backend.tfvars",
+    "terraform:plan": "cd  infra && terraform init -reconfigure -upgrade -backend-config=./backend.tfvars && terraform plan -var-file terraform.tfvars  -out plan.out",
+    "terraform:planfast": "cd infra && terraform plan -var-file terraform.tfvars -out plan.out",
+    "terraform:apply": "cd infra && terraform apply plan.out",
+    "tfp": "cd  infra && terraform init -reconfigure -upgrade -backend-config=./backend.tfvars && terraform plan -var-file terraform.tfvars  -out plan.out",
+    "tfa": "cd  infra && terraform apply plan.out",
+    "terraform:destroy": "cd infra && terraform apply -destroy -auto-approve",
+    "validate": "run-p terraform:validate terraform:fmt:check eslint:check prettier:check",
+    "prerelease": "git fetch origin --prune --prune-tags && git add .",
+    "release": "standard-version -a",
+    "postrelease": "run-s release:*",
+    "release:tags": "git push -f --follow-tags origin main",
+    "ci:validate": "rm -rf node_modules && npm ci && npm run validate",
+    "prepublishOnly": "npm run ci:validate",
+    "yaml:lint": "yamllint **/*.yaml",
+    "patch": "npm run release -- --release-as patch --no-verify",
+    "minor": "npm run release -- --release-as minor --no-verify",
+    "major": "npm run release -- --release-as major --no-verify"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^15.0.0-rc.1",
+    "@angular/common": "^15.0.0-rc.1",
+    "@angular/compiler": "^15.0.0-rc.1",
+    "@angular/core": "^15.0.0-rc.1",
+    "@angular/forms": "^15.0.0-rc.1",
+    "@angular/platform-browser": "^15.0.0-rc.1",
+    "@angular/platform-browser-dynamic": "^15.0.0-rc.1",
+    "@angular/router": "^15.0.0-rc.1",
+    "angular-in-memory-web-api": "~0.15.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.12.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^15.0.0-rc.1",
+    "@angular/cli": "^15.0.0-rc.1",
+    "@angular/compiler-cli": "^15.0.0-rc.1",
+    "@types/jasmine": "~4.3.0",
+    "@types/node": "^16.11.35",
+    "copyfiles": "^2.4.1",
+    "jasmine-core": "~4.5.0",
+    "jasmine-marbles": "~0.9.2",
+    "jasmine-spec-reporter": "~7.0.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~10.9.0",
+    "typescript": "~4.8.0",
+    "@commitlint/cli": "17.2.0",
+    "@commitlint/config-conventional": "17.2.0",
+    "@typescript-eslint/eslint-plugin": "5.42.0",
+    "@typescript-eslint/parser": "5.42.0",
+    "commitizen": "4.2.5",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint-config-prettier": "8.5.0",
+    "husky": "8.0.1",
+    "is-ci": "3.0.1",
+    "lint-staged": "13.0.3",
+    "markdownlint-cli": "0.32.2",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.7.1",
+    "standard-version": "9.5.0",
+    "yaml-lint": "1.7.0",
+    "cypress": "^12.5.0",
+    "find-quote": "^1.5.4",
+    "node-emoji": "^1.11.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "prettier --write",
+      "eslint --fix",
+      "git add ."
+    ]
+  },
+  "standard-version": {
+    "header": "# StarterKit Terraform Azure",
+    "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
+    "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/branchCompare?baseVersion=GT{{previousTag}}&targetVersion=GT{{currentTag}}",
+    "releaseCommitMessageFormat": "chore(release): [skip ci] {{currentTag}}",
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Bug Fixes"
+      },
+      {
+        "type": "chore",
+        "section": "Chore",
+        "hidden": false
+      },
+      {
+        "type": "docs",
+        "section": "Docs",
+        "hidden": false
+      },
+      {
+        "type": "style",
+        "hidden": true
+      },
+      {
+        "type": "refactor",
+        "hidden": true
+      },
+      {
+        "type": "perf",
+        "hidden": true
+      },
+      {
+        "type": "test",
+        "hidden": true
+      }
+    ],
+    "skip": {
+      "changelog": false
+    },
+    "scripts": {}
+  },
+  "engines": {
+    "node": ">=16.13.0"
+  }
+}

@@ -1,0 +1,23 @@
+---
+formatter: markdown
+header-from: "resource_group.tf"
+html: false
+output:
+  file: ""
+  mode: inject
+sort:
+  enabled: true
+  by: name
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: false
+  indent: 2
+  lockfile: true
+  required: true
+  sensitive: true
+  type: true

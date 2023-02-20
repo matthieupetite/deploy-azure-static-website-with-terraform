@@ -1,0 +1,7 @@
+node_modules
+dist
+plan.out
+.angular/**/*
+.env
+.terraform
+.angular
