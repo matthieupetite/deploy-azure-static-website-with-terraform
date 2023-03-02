@@ -9,7 +9,6 @@ Start implementing your terraform code here 😎
 
 | Name                                                                  | Version  |
 | --------------------------------------------------------------------- | -------- |
-| <a name="requirement_azapi"></a> [azapi](#requirement_azapi)          | ~>1.0.0  |
 | <a name="requirement_azurecaf"></a> [azurecaf](#requirement_azurecaf) | =1.2.1   |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement_azurerm)    | ~>3.39.1 |
 | <a name="requirement_random"></a> [random](#requirement_random)       | 3.4.3    |
@@ -30,16 +29,10 @@ No modules.
 | Name                                                                                                                                              | Type        |
 | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | [azurecaf_name.rg-application](https://registry.terraform.io/providers/aztfmod/azurecaf/1.2.1/docs/resources/name)                                | resource    |
-| [azurecaf_name.static_site](https://registry.terraform.io/providers/aztfmod/azurecaf/1.2.1/docs/resources/name)                                   | resource    |
-| [azurecaf_name.static_site_identity](https://registry.terraform.io/providers/aztfmod/azurecaf/1.2.1/docs/resources/name)                          | resource    |
 | [azurecaf_name.webapp_storage](https://registry.terraform.io/providers/aztfmod/azurecaf/1.2.1/docs/resources/name)                                | resource    |
 | [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group)                     | resource    |
 | [azurerm_storage_account.webapp](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account)                 | resource    |
-| [azurerm_storage_blob.websitecssfiles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)              | resource    |
-| [azurerm_storage_blob.websitehtmlfiles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)             | resource    |
-| [azurerm_storage_blob.websiteicofiles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)              | resource    |
-| [azurerm_storage_blob.websitejsfiles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)               | resource    |
-| [azurerm_storage_blob.websitetxtfiles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)              | resource    |
+| [azurerm_storage_blob.website](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_blob)                      | resource    |
 | [azurerm_storage_container.webappcontainer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_container) | data source |
 
 ## Inputs
@@ -52,4 +45,6 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name                                                                                                     | Description             |
+| -------------------------------------------------------------------------------------------------------- | ----------------------- |
+| <a name="output_static_website_endpoint"></a> [static_website_endpoint](#output_static_website_endpoint) | Static website endpoint |

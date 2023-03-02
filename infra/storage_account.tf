@@ -1,3 +1,7 @@
+locals {
+  mime_type = jsondecode(file("${path.module}/files/mime.json"))
+}
+
 # cf . https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 #tfsec:ignore:azure-storage-default-action-deny
 #tfsec:ignore:azure-storage-use-secure-tls-policy
@@ -20,57 +24,13 @@ data "azurerm_storage_container" "webappcontainer" {
   storage_account_name = azurerm_storage_account.webapp.name
 }
 
-resource "azurerm_storage_blob" "websitejsfiles" {
+resource "azurerm_storage_blob" "website" {
   depends_on             = [data.azurerm_storage_container.webappcontainer]
-  for_each               = fileset(path.module, "dist/*.js")
+  for_each               = fileset(path.module, "dist/**")
   name                   = replace(each.key, "dist/", "")
-  storage_account_name   = azurerm_storage_account.webapp.name
   storage_container_name = data.azurerm_storage_container.webappcontainer.name
-  content_type           = "application/javascript"
-  type                   = "Block"
-  source                 = "/workspaces/sample-angular-app/infra/${each.key}"
-}
-
-resource "azurerm_storage_blob" "websitehtmlfiles" {
-  depends_on             = [data.azurerm_storage_container.webappcontainer]
-  for_each               = fileset(path.module, "dist/*.html")
-  name                   = replace(each.key, "dist/", "")
+  content_type           = lookup(local.mime_type, regex("\\.[^.]+$", each.key), null)
   storage_account_name   = azurerm_storage_account.webapp.name
-  storage_container_name = data.azurerm_storage_container.webappcontainer.name
-  content_type           = "text/html"
   type                   = "Block"
-  source                 = "/workspaces/sample-angular-app/infra/${each.key}"
-}
-
-resource "azurerm_storage_blob" "websitetxtfiles" {
-  depends_on             = [data.azurerm_storage_container.webappcontainer]
-  for_each               = fileset(path.module, "dist/*.txt")
-  name                   = replace(each.key, "dist/", "")
-  storage_account_name   = azurerm_storage_account.webapp.name
-  storage_container_name = data.azurerm_storage_container.webappcontainer.name
-  content_type           = "text/plain"
-  type                   = "Block"
-  source                 = "/workspaces/sample-angular-app/infra/${each.key}"
-}
-
-resource "azurerm_storage_blob" "websiteicofiles" {
-  depends_on             = [data.azurerm_storage_container.webappcontainer]
-  for_each               = fileset(path.module, "dist/*.ico")
-  name                   = replace(each.key, "dist/", "")
-  storage_account_name   = azurerm_storage_account.webapp.name
-  storage_container_name = data.azurerm_storage_container.webappcontainer.name
-  content_type           = "image/vnd.microsoft.icon"
-  type                   = "Block"
-  source                 = "/workspaces/sample-angular-app/infra/${each.key}"
-}
-
-resource "azurerm_storage_blob" "websitecssfiles" {
-  depends_on             = [data.azurerm_storage_container.webappcontainer]
-  for_each               = fileset(path.module, "dist/*.css")
-  name                   = replace(each.key, "dist/", "")
-  storage_account_name   = azurerm_storage_account.webapp.name
-  storage_container_name = data.azurerm_storage_container.webappcontainer.name
-  content_type           = "text/css"
-  type                   = "Block"
-  source                 = "/workspaces/sample-angular-app/infra/${each.key}"
+  source                 = "//workspaces/deploy-azure-static-website-with-terraform/infra/${each.key}"
 }

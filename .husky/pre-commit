@@ -8,8 +8,7 @@ npm run terraform:validate
 npm run terraform:fmt:fix 
 npm run terraform:docs 
 npm run prettier:fix 
-npm run markdown:fix 
-npm run terraform:tfsec:static
+npm run markdown:fix
 git add *\*.tf
 git add *\*.md 
 git add *\*.js
