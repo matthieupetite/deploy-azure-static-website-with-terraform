@@ -1,9 +1,7 @@
-# April Marketplace Azure Deployement
+# Azure Static Website deployement
 
 This project is dedicated to evaluate the deployement of an Angular application on Azure by
 using the azure static web site service
-
-Start implementing your terraform code here 😎
 
 ## Requirements
 
