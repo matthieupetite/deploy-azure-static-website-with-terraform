@@ -1,4 +1,11 @@
 # StarterKit Terraform Azure
+## 1.1.0 (2023-03-02)
+
+
+### Docs
+
+* **static web site:** add documentation and clean code ([c0aa3fc](https://github.com/matthieupetite/deploy-azure-static-website-with-terraform/commit/c0aa3fcaf2b8f4e5bfffc3a154f4282aa5c378f0))
+
 ### [1.0.2](https://git2.april.interne.fr/matthieu.petite/sample-angular-app-with-static-website/branchCompare?baseVersion=GTv1.0.0&targetVersion=GTv1.0.2) (2023-02-20)
 
 
