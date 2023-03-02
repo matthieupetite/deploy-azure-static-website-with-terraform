@@ -1,4 +1,11 @@
 # StarterKit Terraform Azure
+### [1.1.1](https://github.com/matthieupetite/deploy-azure-static-website-with-terraform/branchCompare?baseVersion=GTv1.1.0&targetVersion=GTv1.1.1) (2023-03-02)
+
+
+### Bug Fixes
+
+* **documentation:** change header in tf readme file ([a0a1b4b](https://github.com/matthieupetite/deploy-azure-static-website-with-terraform/commit/a0a1b4b037bac11a3fe47fb4b98c74ce08dd7cc9))
+
 ## 1.1.0 (2023-03-02)
 
 
